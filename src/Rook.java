@@ -4,28 +4,27 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.io.File;
 
-public class Pawn {
+public class Rook{
     private int x;
     private int y;
     private Color team;
     private BufferedImage img;
-    private BufferedImage whitePawn;
-    private BufferedImage blackPawn;
-
-    public Pawn(Color teamColor, int xVal, int yVal){
+    private BufferedImage whiteRook;
+    private BufferedImage blackRook;
+    public Rook(Color teamColor, int xVal, int yVal){
         team = teamColor;
         x = xVal;
         y = yVal;
         try {
-            blackPawn = ImageIO.read(new File("blackPawn.png"));
-            whitePawn = ImageIO.read(new File ("whitePawn.png")); 
+            blackRook = ImageIO.read(new File("blackRook.png"));
+            whiteRook = ImageIO.read(new File ("whiteRook.png")); 
         } catch (IOException e) {
             
         }
         if (team == Color.white){
-            img = whitePawn;
+            img = whiteRook;
         } else {
-            img = blackPawn;
+            img = blackRook;
         }
     }
 
@@ -42,8 +41,6 @@ public class Pawn {
 
     public void paint(Graphics2D g){
         g.drawImage(getImg(), getX(), getY(), 75,75,null);
-        //g.drawRect(0, 0, 5, 5);
+        
     }
-
-    
 }
