@@ -3,28 +3,27 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.io.File;
-
-public class Rook extends Pieces{
+public class Horse extends Pieces {
     private int x;
     private int y;
     private Color team;
     private BufferedImage img;
-    private BufferedImage whiteRook;
-    private BufferedImage blackRook;
-    public Rook(Color teamColor, int xVal, int yVal){
+    private BufferedImage whiteHorse;
+    private BufferedImage blackHorse;
+    public Horse(Color teamColor, int xVal, int yVal){
         team = teamColor;
         x = xVal;
         y = yVal;
         try {
-            blackRook = ImageIO.read(new File("blackRook.png"));
-            whiteRook = ImageIO.read(new File ("whiteRook.png")); 
+            blackHorse = ImageIO.read(new File("blackHorse.png"));
+            whiteHorse = ImageIO.read(new File ("whiteHorse.png")); 
         } catch (IOException e) {
             
         }
         if (team == Color.white){
-            img = whiteRook;
+            img = whiteHorse;
         } else {
-            img = blackRook;
+            img = blackHorse;
         }
     }
 

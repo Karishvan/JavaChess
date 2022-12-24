@@ -10,6 +10,13 @@ public class ChessBoard {
     public Rook[] whiteRooks = new Rook[2];
     public Rook[] blackRooks = new Rook[2];
 
+    public Queen[] allQueens = new Queen[2];
+    public King[] allKings = new King[2];
+
+    public Bishop[] allBishops = new Bishop[4];
+
+    public Horse[] allHorses = new Horse[4];
+
     public ChessBoard(){
         x = 0;
         y = 0;
@@ -27,6 +34,54 @@ public class ChessBoard {
 
         blackRooks[0] = new Rook(Color.black, 0, length-tileSize);
         blackRooks[1] = new Rook(Color.black, length-tileSize, length-tileSize);
+
+        //Queen 0 is white, Queen 1 is black
+        allQueens[0] = new Queen(Color.white, 4 * tileSize, 0);
+        allQueens[1] = new Queen(Color.black, 4 * tileSize, length-tileSize);
+
+        //King 0 is white, King 1 is black
+        allKings[0] = new King(Color.white, 3 * tileSize, 0);
+        allKings[1] = new King(Color.black, 3 * tileSize, length-tileSize);
+
+        for (int i = 0; i < allBishops.length; i ++){
+            int xVal;
+            int yVal;
+            Color team;
+            if (i % 2 == 0){
+                xVal = 2 * tileSize;
+            } else {
+                xVal = 5 * tileSize;
+            }
+            
+            if (i > 1){
+                team = Color.black;
+                yVal = length-tileSize;
+            } else {
+                team = Color.white;
+                yVal = 0;
+            }
+            allBishops[i] = new Bishop(team, xVal, yVal);
+        }
+
+        for (int i = 0; i < allHorses.length; i ++){
+            int xVal;
+            int yVal;
+            Color team;
+            if (i % 2 == 0){
+                xVal = 1 * tileSize;
+            } else {
+                xVal = 6 * tileSize;
+            }
+            
+            if (i > 1){
+                team = Color.black;
+                yVal = length-tileSize;
+            } else {
+                team = Color.white;
+                yVal = 0;
+            }
+            allHorses[i] = new Horse(team, xVal, yVal);
+        }
         
 
 
@@ -72,6 +127,18 @@ public class ChessBoard {
         }
         for (Rook b: blackRooks){
             b.paint(g);
+        }
+        for (Queen q: allQueens){
+            q.paint(g);
+        }
+        for (King k: allKings){
+            k.paint(g);
+        }
+        for (Bishop b: allBishops){
+            b.paint(g);
+        }
+        for (Horse h: allHorses){
+            h.paint(g);
         }
         
     }

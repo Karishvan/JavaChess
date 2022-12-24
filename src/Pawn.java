@@ -4,7 +4,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.io.File;
 
-public class Pawn {
+public class Pawn extends Pieces{
     private int x;
     private int y;
     private Color team;
