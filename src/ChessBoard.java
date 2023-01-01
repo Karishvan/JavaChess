@@ -1,9 +1,15 @@
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
 public class ChessBoard {
     private int x;
     private int y;
     private int length;
-    private int tileSize;
+    private boolean select;
+    private Color currentTurn;
+    
+    public static int tileSize;
+
     public Pawn[] whitePawns = new Pawn[8];
     public Pawn[] blackPawns = new Pawn[8];
 
@@ -17,11 +23,17 @@ public class ChessBoard {
 
     public Horse[] allHorses = new Horse[4];
 
+    public Pieces[][] allPieces = {whitePawns, blackPawns, whiteRooks, blackRooks, allQueens, allKings, allBishops, allHorses};
+
+    public Pieces originalPiece;
     public ChessBoard(){
         x = 0;
         y = 0;
         length = 600;
         tileSize = length/8;
+        select = false;
+        currentTurn = Color.black;
+        originalPiece = null;
 
         for (int i = 0; i < whitePawns.length; i++){
             whitePawns[i] = new Pawn(Color.white, i * tileSize, tileSize);
@@ -96,9 +108,37 @@ public class ChessBoard {
     public int getLength(){
         return length;
     }
-    public int getTileSize(){
+    public static int getTileSize(){
         return tileSize;
     }
+
+    public boolean getSelect(){
+        return select;
+    }
+
+    public Pieces getOriginalPiece(){
+        return originalPiece;
+    }
+
+    public void setOriginalPiece(Pieces newPiece){
+        originalPiece = newPiece;
+    }
+
+    public Color getTurn(){
+        return currentTurn;
+    }
+
+    public void toggleTurn(){
+        if (currentTurn == Color.black){
+            currentTurn = Color.white;
+        } else {
+            currentTurn = Color.black;
+        }
+    }
+    public void setSelect(boolean newSelect){
+        select = newSelect;
+    }
+
 
     public void paint(Graphics2D g){
         for (int i = 0; i < 8; i+=1){
@@ -142,4 +182,63 @@ public class ChessBoard {
         }
         
     }
+
+    public void mouseClicked(MouseEvent e){
+        
+            
+        checkTeam(e, allPieces);
+            
+        
+    }
+
+
+    //UPDATE THIS
+    public Pieces checkBox(MouseEvent e, Pieces[][] totalPieces){
+        for (int i = 0; i < totalPieces.length; i ++){
+            for (int j = 0; j < totalPieces[i].length; j++){
+                if (e.getX() < totalPieces[i][j].getX() + getTileSize() && e.getX() > totalPieces[i][j].getX() && e.getY() < totalPieces[i][j].getY() + getTileSize() && e.getY() > totalPieces[i][j].getY()){
+                    return totalPieces[i][j];
+                 }
+            }
+        }
+        return null;
+       
+        
+    }
+
+    public Pieces checkBox(int[] xy, Pieces piece){
+        if (xy[0] < piece.getX() + getTileSize() && xy[0] > piece.getX() && xy[1] < piece.getY() + getTileSize() && xy[1] > piece.getY()){
+            return piece;
+         } else {
+             return null;
+         }
+    }
+    
+    private void checkTeam(MouseEvent e, Pieces[][] totalPieces){
+
+
+        /*for (int i = 0; i < totalPieces.length; i ++){
+            for (int j = 0; j < totalPieces[i].length; j ++){
+                if (checkBox(e, totalPieces[i][j]) != null && checkBox(e, totalPieces[i][j]).getTeam() == getTurn()){
+                    totalPieces[i][j].select(this);
+                    setOriginalPiece(originalPiece);
+                    setSelect(true);
+                    break;
+                } else if (getSelect() && checkBox(e, ) == null || checkBox(e, originalPiece))
+            }
+        }*/
+        Pieces itemInBox = checkBox(e, totalPieces);
+        if (itemInBox!= null && itemInBox.getTeam() == getTurn()){
+            itemInBox.select(this);
+            setOriginalPiece(itemInBox);
+            setSelect(true);
+            
+            
+        } else if (getSelect() == true && (itemInBox == null || itemInBox.getTeam() != getTurn())){
+            getOriginalPiece().move(this);
+            toggleTurn();
+            setSelect(false);
+        } 
+    }
+
 }

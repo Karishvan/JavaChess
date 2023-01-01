@@ -40,9 +40,34 @@ public class Queen extends Pieces{
         return y;
     }
 
+    public void setY(int newY){
+        y = newY;
+    }
+
+    public void setX(int newX){
+        x = newX;
+    }
+
     public void paint(Graphics2D g){
         g.drawImage(getImg(), getX(), getY(), 75,75,null);
         
+    }
+
+    public Color getTeam(){
+        return team;
+    }
+
+    public void select(ChessBoard board){
+        
+    }
+
+    //Experimenting
+    public void move(ChessBoard board){
+        if (getTeam() == Color.black){
+            setY(getY() - ChessBoard.getTileSize() * 2);
+        } else {
+            setY(getY() + ChessBoard.getTileSize() * 2);
+        }
     }
 }
 

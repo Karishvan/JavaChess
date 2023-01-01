@@ -39,8 +39,28 @@ public class Rook extends Pieces{
         return y;
     }
 
+    public void setY(int newY){
+        y = newY;
+    }
+
+    public void setX(int newX){
+        x = newX;
+    }
+
+    public Color getTeam(){
+        return team;
+    }
+
     public void paint(Graphics2D g){
         g.drawImage(getImg(), getX(), getY(), 75,75,null);
+        
+    }
+
+    public void move(ChessBoard board){
+
+    }
+
+    public void select(ChessBoard board){
         
     }
 }

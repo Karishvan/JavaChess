@@ -1,10 +1,19 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
 
 public class MainFrame extends JPanel {
 
     ChessBoard board = new ChessBoard();
 
+    public MainFrame(){
+        addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent event){
+                board.mouseClicked(event);
+            }
+        });
+    }
     public void paint (Graphics g){
         super.paint(g);
 
@@ -24,6 +33,7 @@ public class MainFrame extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         while (true){
+            display.repaint();
             Thread.sleep(10);
         }
     }
